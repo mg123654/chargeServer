@@ -24,23 +24,23 @@ int main() {
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
 
-    char public_ip[64];
-    utils_get_public_ip(public_ip, sizeof(public_ip));
+    char local_ip[64];
+    utils_get_local_ip(local_ip, sizeof(local_ip));
 
     printf("========================================\n");
     printf("   Charging Station Server v1.0\n");
     printf("========================================\n");
-    printf("Public IP: %s\n", public_ip);
+    printf("Local IP: %s\n", local_ip);
     printf("Listening on port: %d\n", PORT);
     printf("========================================\n\n");
 
-    int server_fd = network_init(public_ip, PORT);
+    int server_fd = network_init(local_ip, PORT);
     if (server_fd < 0) {
         fprintf(stderr, "Failed to initialize network\n");
         return 1;
     }
 
-    printf("Server bound to %s:%d, waiting for connections...\n\n", public_ip, PORT);
+    printf("Server bound to %s:%d, waiting for connections...\n\n", local_ip, PORT);
 
     while (running) {
         int client_fd = network_accept(server_fd);

@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void handle_login(const char *command, Session *session, char *response, int response_size) {
+static void handle_login(Session *session, char *response, int response_size) {
     session_login(session);
     snprintf(response, response_size, "Logon\r\n");
     printf("[LOGIN] User authenticated\n");
@@ -128,7 +128,7 @@ void protocol_process(const char *command, Session *session, char *response, int
     response[0] = '\0';
 
     if (strncmp(command, "LOGIN", 5) == 0) {
-        handle_login(command, session, response, response_size);
+        handle_login(session, response, response_size);
     }
     else if (strncmp(command, "PING", 4) == 0) {
         handle_ping(session, response, response_size);

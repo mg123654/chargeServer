@@ -4,21 +4,25 @@
 #include <string.h>
 #include <time.h>
 
-void utils_get_public_ip(char *buffer, int size) {
+void utils_get_local_ip(char *buffer, int size) {
     if (buffer == NULL || size <= 0) {
         return;
     }
 
-    FILE *fp = popen("curl -s ifconfig.me", "r");
+    FILE *fp = popen("hostname -I", "r");
     if (fp == NULL) {
         snprintf(buffer, size, "0.0.0.0");
         return;
     }
 
-    if (fgets(buffer, size, fp) != NULL) {
-        int len = strlen(buffer);
-        if (len > 0 && buffer[len - 1] == '\n') {
-            buffer[len - 1] = '\0';
+    char ip_list[256];
+    if (fgets(ip_list, sizeof(ip_list), fp) != NULL) {
+        char *token = strtok(ip_list, " \t\r\n");
+
+        if (token != NULL) {
+            snprintf(buffer, size, "%s", token);
+        } else {
+            snprintf(buffer, size, "0.0.0.0");
         }
     } else {
         snprintf(buffer, size, "0.0.0.0");

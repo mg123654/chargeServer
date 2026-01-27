@@ -23,9 +23,7 @@
 服务器发起:update vision
 终端响应:
 	对于实验：用PUT命令发消息给测试工具
-	实际项目: 
-		升级开始 update start
-		升级成功 update success
+
 
 (5)下单命令
 服务器发起:on sock time ddh
@@ -38,7 +36,7 @@
 
 	终端响应:
 ​	对于实验：用PUT命令发消息给测试工具
-​	实际项目: 返回一条序号为0的电流报文，否则服务器会间隔5s后，继续发送下单命令。
+
 
 (6)结束命令
 服务器发起:off sock ddh
@@ -51,9 +49,9 @@
 	curr:	本周期平均电流值
 	pwr:	本周期平均功率
 	vol:	本周期平均电压
-	usetime: 已充电时间
+	usetime: 已充电时间ok
 服务器响应:
-	服务器收到不响应
+	服务器返回ok
 
 (8)结束事件申报
 终端发起:log over ddh ekwh time event
@@ -76,5 +74,3 @@
 (9)自定义命令
 	reboot
 	cat_data
-	
-单片机可以用PUT 命令 把数据传输给调试工具
