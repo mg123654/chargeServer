@@ -16,9 +16,13 @@ int network_init(const char *ip, int port) {
 
     int opt = 1;
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt)) < 0) {
-        perror("setsockopt");
+        perror("setsockopt SO_REUSEADDR");
         close(server_fd);
         return -1;
+    }
+
+    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEPORT, &opt, sizeof(opt)) < 0) {
+        perror("setsockopt SO_REUSEPORT");
     }
 
     struct sockaddr_in server_addr;
