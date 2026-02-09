@@ -1,7 +1,6 @@
 #include "network.h"
 #include "protocol.h"
 #include "session.h"
-#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -27,15 +26,11 @@ int main() {
     signal(SIGINT, signal_handler);
     signal(SIGTERM, signal_handler);
 
-    // 获取本机私有IP地址
-    char local_ip[64];
-    utils_get_local_ip(local_ip, sizeof(local_ip));
-
     // 打印启动信息
     printf("========================================\n");
     printf("   Charging Station Server v1.0\n");
     printf("========================================\n");
-    printf("Local IP: %s\n", local_ip);
+    printf("Binding to: 0.0.0.0 (all interfaces)\n");
     printf("Listening on port: %d\n", PORT);
     printf("========================================\n\n");
 
@@ -46,7 +41,7 @@ int main() {
         return 1;
     }
 
-    printf("Server bound to %s:%d, waiting for connections...\n\n", local_ip, PORT);
+    printf("Server bound to 0.0.0.0:%d, waiting for connections...\n\n", PORT);
 
     // 主循环：持续接受客户端连接
     while (running) {
